@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:cache="http://www.springframework.org/schema/cache"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/cache http://www.springframework.org/schema/cache/spring-cache.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+	<bean id="jedisPoolConfig" class="redis.clients.jedis.JedisPoolConfig">
+		<property name="maxIdle" value="30" />
+		<property name="minIdle" value="10" />
+		<property name="maxWaitMillis" value="1000" />
+		<property name="testOnBorrow" value="true" />
+	</bean>	
+
+	<bean id="shardedJedisPool" class="redis.clients.jedis.ShardedJedisPool">
+		<constructor-arg ref="jedisPoolConfig" index="0" />
+		<constructor-arg index="1">
+			<list>
+				<!-- 节点-1 -->
+				<bean class="redis.clients.jedis.JedisShardInfo">
+					<constructor-arg value="redis-1.i.v-log.cn" />
+				</bean>
+				<!-- 节点-2 -->
+				<bean class="redis.clients.jedis.JedisShardInfo">
+					<constructor-arg value="redis-1.i.v-log.cn" /><!-- 使用了相同IP，仅作模拟多个节点之用 -->
+				</bean>
+			</list>
+		</constructor-arg>
+	</bean>
+	
+</beans>
