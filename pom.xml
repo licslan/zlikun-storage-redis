@@ -24,7 +24,8 @@
 		<module>redis-0500-spring-data-consistent</module>
 		<module>redis-0600-blog</module>
 		<module>redis-0100-config</module>
-	</modules>
+        <module>zlikun-storage-redis-pipeline</module>
+    </modules>
 
 	<dependencyManagement>
 

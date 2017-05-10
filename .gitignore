@@ -17,3 +17,7 @@ hs_err_pid*
 */.project
 */.classpath
 */.springBeans
+
+.idea
+*/.idea
+*.iml
