@@ -26,6 +26,9 @@ public class PipelineTest extends ConfigBase {
 
         logger.info("开始执行无返回值管道查询：");
         query_2(this.jedis);
+
+        // 清除测试数据
+        cleanData(this.jedis);
     }
 
     /**
@@ -92,8 +95,7 @@ public class PipelineTest extends ConfigBase {
     private void initData(Jedis jedis) {
 
         // 清除原数据，避免干扰测试
-        jedis.del("zlikun:1:login") ;
-        jedis.del("zlikun:2:login") ;
+        this.cleanData(jedis);
 
         // 准备数据，使用管道批量写入数据
         Pipeline pipe = jedis.pipelined() ;
@@ -109,6 +111,15 @@ public class PipelineTest extends ConfigBase {
 
         // 执行同步，无返回值
         pipe.sync();
+    }
+
+    /**
+     * 清除测试数据
+     * @param jedis
+     */
+    private void cleanData(Jedis jedis) {
+        jedis.del("zlikun:1:login") ;
+        jedis.del("zlikun:2:login") ;
     }
 
 }
